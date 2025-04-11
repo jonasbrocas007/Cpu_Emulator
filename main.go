@@ -35,7 +35,7 @@ func cpu_exec(PC uint8, R1 uint8, R2 uint8, R3 uint8, RAM [255]uint8, instructio
 		iadata := fetch_byte(PC)
 		var acc uint8 = 0
 		switch iadata{
-			case ADDI:
+			case ADDI: //Add immediate instruction
 				switch fetch_byte(PC + 2){
 					case 0xFF:
 						acc = R1
@@ -57,7 +57,7 @@ func cpu_exec(PC uint8, R1 uint8, R2 uint8, R3 uint8, RAM [255]uint8, instructio
 				}
 				PC += 3
 			
-			case LOAD:
+			case LOAD: //Load from register instruction
 				switch fetch_byte(PC + 1){
 					case 0xFF:
 						R1 = RAM[fetch_byte(PC + 2)]
@@ -77,15 +77,15 @@ func cpu_exec(PC uint8, R1 uint8, R2 uint8, R3 uint8, RAM [255]uint8, instructio
 	return PC, R1, R2, R3, RAM
 }
 func main(){
-	RAM[0] = 0xC6
-	RAM[1] = 0xFF
-	RAM[2] = 3
-	RAM[3] = 5
+	RAM[0] = 0xC6 //Load
+	RAM[1] = 0xFF // to R1
+	RAM[2] = 3 // The third value
+	RAM[3] = 5 // The third value is 5
 
-	RAM[4] = 0xA1
-	RAM[5] = 0xFE
-	RAM[6] = 0xFF
-	RAM[7] = 5
+	RAM[4] = 0xA1 // Add immediate
+	RAM[5] = 0xFE // Add result to R1
+	RAM[6] = 0xFF // And R1 to //////////////////// Bellow
+	RAM[7] = 5 // Number 5     //////////////////// Add R1 to 5
 
 
 	//cpu_exec(PC, ACC, R1, RAM, 2)
